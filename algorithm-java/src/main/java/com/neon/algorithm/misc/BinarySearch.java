@@ -1,21 +1,41 @@
 package com.neon.algorithm.misc;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.List;
 
 public class BinarySearch {
-    public static <T extends Comparable> int search(List<T> collection, T item) {
-        if (collection == null || collection.isEmpty())
-            throw new UnsupportedOperationException("Search isn't allowed for empty or null collection");
+    private static final Logger log = LogManager.getLogger(BinarySearch.class.getName());
 
-        var middleIndex = collection.size() / 2;
-        var middleItem = collection.get(middleIndex);
+    public static <T extends Comparable> int recursiveSearch(List<T> sortedList, T item) {
+        if (sortedList == null || item == null)
+            throw new UnsupportedOperationException("Search isn't allowed for passed null arguments");
 
-        if (middleItem.compareTo(item) == 0) return middleIndex;
-        else if (item.compareTo(middleItem) < 0)
-            return search(collection.subList(0, middleIndex), item);
-        else if (item.compareTo(middleItem) > 0)
-            return search(collection.subList(middleIndex, collection.size() - 1), item);
-            // item isn't found in collection
-        else return -1;
+        return recursiveSearch(sortedList, item, 0, sortedList.size() - 1);
+    }
+
+    private static <T extends Comparable> int recursiveSearch(List<T> sortedList, T item, int startIndex, int endIndex) {
+        if (sortedList.isEmpty()) return -1;
+
+        var middleIndex = (endIndex - startIndex) / 2 + startIndex;
+        var middleItem = sortedList.get(middleIndex);
+
+        log.debug(String.format("List: %s Middle %s Start %s End %s", sortedList, middleIndex, startIndex, endIndex));
+
+        if (item.compareTo(middleItem) == 0)
+            return middleIndex;
+        else if (startIndex == endIndex)
+            return -1;
+        else if (item.compareTo(middleItem) < 0) {
+            startIndex = 0;
+            endIndex = middleIndex - 1;
+            if (endIndex < 0) endIndex = 0;
+        } else if (item.compareTo(middleItem) > 0) {
+            startIndex = middleIndex + 1;
+            if (startIndex > endIndex) startIndex = endIndex;
+        }
+
+        return recursiveSearch(sortedList, item, startIndex, endIndex);
     }
 }
