@@ -12,6 +12,7 @@ public class BinarySearch {
         if (sortedList == null || item == null)
             throw new UnsupportedOperationException("Search isn't allowed for passed null arguments");
 
+        log.debug(String.format("List: %s", sortedList));
         return recursiveSearch(sortedList, item, 0, sortedList.size() - 1);
     }
 
@@ -21,7 +22,7 @@ public class BinarySearch {
         var middleIndex = (endIndex - startIndex) / 2 + startIndex;
         var middleItem = sortedList.get(middleIndex);
 
-        log.debug(String.format("List: %s Middle %s Start %s End %s", sortedList, middleIndex, startIndex, endIndex));
+        log.debug(String.format("Indexes: Middle %s Start %s End %s", middleIndex, startIndex, endIndex));
 
         if (item.compareTo(middleItem) == 0)
             return middleIndex;
