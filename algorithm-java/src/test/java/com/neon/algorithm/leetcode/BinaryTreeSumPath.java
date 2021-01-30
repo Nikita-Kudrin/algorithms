@@ -57,9 +57,9 @@ class TreeNode {
         while (!queue.isEmpty()) {
             var node = queue.remove();
 
-            if (node == null) textRepresentation += "null,";
+            if (node == null) textRepresentation += "null, ";
             else {
-                textRepresentation += node.val + ",";
+                textRepresentation += node.val + ", ";
 
                 if (node.left == null && node.right == null) continue;
 
@@ -68,7 +68,7 @@ class TreeNode {
             }
         }
 
-        if (textRepresentation.endsWith(",")) return textRepresentation.substring(0, textRepresentation.length() - 1);
+        if (textRepresentation.endsWith(", ")) return textRepresentation.substring(0, textRepresentation.length() - 2);
         return textRepresentation;
     }
 
@@ -78,7 +78,7 @@ class TreeNode {
     }
 
     /**
-     * Breadth-first init
+     * Breadth-first tree init
      */
     static TreeNode fromList(List<Integer> items) {
         if (items == null || items.isEmpty()) return null;
@@ -95,15 +95,15 @@ class TreeNode {
                 var item = queue.remove();
 
                 if (item == null) {
-                    nodeIndex += 2; // skip 2 null children
+                    nodeIndex +=2; // skip 2 null children
                     continue;
                 }
 
-                if (nodeIndex + 1 < items.size()) {
+                if (nodeIndex + 1 <= items.size()) {
                     item.left = TreeNode.fromInt(items.get(nodeIndex++));
                     queue.add(item.left);
                 }
-                if (nodeIndex + 1 < items.size()) {
+                if (nodeIndex + 1 <= items.size()) {
                     item.right = TreeNode.fromInt(items.get(nodeIndex++));
                     queue.add(item.right);
                 }
@@ -183,9 +183,3 @@ public class BinaryTreeSumPath {
         log.info(tree);
     }
 }
-
-
-
-
-
-
