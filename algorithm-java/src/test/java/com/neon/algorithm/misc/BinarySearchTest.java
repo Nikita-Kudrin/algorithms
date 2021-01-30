@@ -39,29 +39,29 @@ public class BinarySearchTest {
                 () -> BinarySearch.recursiveSearch(new ArrayList<Integer>(), null));
     }
 
+    List<SearchTestData<Integer>> testDataBasicBinarySearchLogic = Arrays.asList(
+            new SearchTestData<Integer>(Arrays.asList(0), 0, 0),
+            new SearchTestData<Integer>(Arrays.asList(0, 1), 0, 0),
+            new SearchTestData<Integer>(Arrays.asList(0, 1, 2), 0, 0),
+            new SearchTestData<Integer>(Arrays.asList(0, 1, 2, 3), 0, 0),
+
+            new SearchTestData<Integer>(Arrays.asList(1), 0, -1),
+            new SearchTestData<Integer>(Arrays.asList(), 0, -1),
+            new SearchTestData<Integer>(Arrays.asList(1, 2), 0, -1),
+            new SearchTestData<Integer>(Arrays.asList(1, 2, 3), 0, -1),
+            new SearchTestData<Integer>(Arrays.asList(1, 2, 3, 4), 0, -1),
+
+            new SearchTestData<Integer>(Arrays.asList(0, 1), 1, 1),
+            new SearchTestData<Integer>(Arrays.asList(0, 1, 2), 1, 1),
+            new SearchTestData<Integer>(Arrays.asList(0, 1, 2), 2, 2),
+            new SearchTestData<Integer>(Arrays.asList(0, 1, 2, 3), 1, 1),
+            new SearchTestData<Integer>(Arrays.asList(0, 1, 2, 3), 2, 2),
+            new SearchTestData<Integer>(Arrays.asList(0, 1, 2, 3), 3, 3)
+    );
+
     @TestFactory
     public Stream<DynamicTest> search_basicLogicDynamicTest() {
-        var inputData = Arrays.asList(
-                new SearchTestData<Integer>(Arrays.asList(0), 0, 0),
-                new SearchTestData<Integer>(Arrays.asList(0, 1), 0, 0),
-                new SearchTestData<Integer>(Arrays.asList(0, 1, 2), 0, 0),
-                new SearchTestData<Integer>(Arrays.asList(0, 1, 2, 3), 0, 0),
-
-                new SearchTestData<Integer>(Arrays.asList(1), 0, -1),
-                new SearchTestData<Integer>(Arrays.asList(), 0, -1),
-                new SearchTestData<Integer>(Arrays.asList(1, 2), 0, -1),
-                new SearchTestData<Integer>(Arrays.asList(1, 2, 3), 0, -1),
-                new SearchTestData<Integer>(Arrays.asList(1, 2, 3, 4), 0, -1),
-
-                new SearchTestData<Integer>(Arrays.asList(0, 1), 1, 1),
-                new SearchTestData<Integer>(Arrays.asList(0, 1, 2), 1, 1),
-                new SearchTestData<Integer>(Arrays.asList(0, 1, 2), 2, 2),
-                new SearchTestData<Integer>(Arrays.asList(0, 1, 2, 3), 1, 1),
-                new SearchTestData<Integer>(Arrays.asList(0, 1, 2, 3), 2, 2),
-                new SearchTestData<Integer>(Arrays.asList(0, 1, 2, 3), 3, 3)
-        );
-
-        return inputData.stream()
+        return testDataBasicBinarySearchLogic.stream()
                 .map(testDataItem -> DynamicTest.dynamicTest("basicLogicDynamicTest",
                         () -> {
                             var searchResult = BinarySearch.recursiveSearch(testDataItem.collection, testDataItem.searchedItem);
