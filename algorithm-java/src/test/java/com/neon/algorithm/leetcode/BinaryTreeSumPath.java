@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -24,6 +25,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Definition for a binary tree node.
  */
 class TreeNode {
+    private static final Logger log = LogManager.getLogger();
+
     int val;
     TreeNode left;
     TreeNode right;
@@ -41,34 +44,76 @@ class TreeNode {
         this.right = right;
     }
 
+    /**
+     * Breadth-first print tree
+     */
     @Override
     public String toString() {
-        String textRepresentation = val + "";
+        var queue = new LinkedList<TreeNode>();
+        queue.add(this);
 
-        textRepresentation += "," + ((left == null) ? left : left.toString());
-        textRepresentation += "," + ((right == null) ? right : right.toString());
+        String textRepresentation = "";
 
+        while (!queue.isEmpty()) {
+            var node = queue.remove();
+
+            if (node == null) textRepresentation += "null,";
+            else {
+                textRepresentation += node.val + ",";
+
+                if (node.left == null && node.right == null) continue;
+
+                queue.add(node.left);
+                queue.add(node.right);
+            }
+        }
+
+        if (textRepresentation.endsWith(",")) return textRepresentation.substring(0, textRepresentation.length() - 1);
         return textRepresentation;
     }
 
-    static TreeNode fromList(List<Integer> items) {
-        return initNode(items);
+    static TreeNode fromInt(Integer val) {
+        if (val == null) return null;
+        else return new TreeNode(val);
     }
 
-    private static TreeNode initNode(List<Integer> items) {
+    /**
+     * Breadth-first init
+     */
+    static TreeNode fromList(List<Integer> items) {
         if (items == null || items.isEmpty()) return null;
 
-        var nodeValue = items.get(0);
-        if (nodeValue == null) return null;
-        var node = new TreeNode(items.get(0));
+        var nodeIndex = 0;
 
-        if (items.size() > 1) // left leaf data available
-            node.left = initNode(items.subList(1, items.size()));
+        var root = new TreeNode(items.get(nodeIndex++));
+        var queue = new LinkedList<TreeNode>();
+        queue.add(root);
 
-        if (items.size() > 2) // right leaf data available
-            node.right = initNode(items.subList(2, items.size()));
+        try {
+            while (!queue.isEmpty() && nodeIndex < items.size()) {
+//                log.info(queue);
+                var item = queue.remove();
 
-        return node;
+                if (item == null) {
+                    nodeIndex += 2; // skip 2 null children
+                    continue;
+                }
+
+                if (nodeIndex + 1 < items.size()) {
+                    item.left = TreeNode.fromInt(items.get(nodeIndex++));
+                    queue.add(item.left);
+                }
+                if (nodeIndex + 1 < items.size()) {
+                    item.right = TreeNode.fromInt(items.get(nodeIndex++));
+                    queue.add(item.right);
+                }
+            }
+        } catch (Exception ex) {
+            log.error(root.toString());
+            throw ex;
+        }
+
+        return root;
     }
 }
 
@@ -84,13 +129,14 @@ class TestData {
     }
 }
 
+
 public class BinaryTreeSumPath {
     private final Logger log = LogManager.getLogger();
 
     public boolean hasPathSum(TreeNode root, int targetSum) {
         if (root == null) return false;
 
-        // are we found leaf ?
+        // found a leaf
         if (root.left == null && root.right == null && (targetSum - root.val == 0))
             return true;
         else {
@@ -117,7 +163,7 @@ public class BinaryTreeSumPath {
                         () -> {
                             var hasPath = hasPathSum(testDataItem.node, testDataItem.searchedSum);
                             assertThat(hasPath)
-                                    .describedAs("Tree : " + testDataItem.node.toString() + " has path with sum " + testDataItem.searchedSum)
+                                    .describedAs("Tree : \"" + testDataItem.node.toString() + "\" has path with sum " + testDataItem.searchedSum)
                                     .isEqualTo(testDataItem.expectedResult);
                         }));
     }
@@ -125,6 +171,15 @@ public class BinaryTreeSumPath {
     @Test
     void treeTextRepresentation() {
         var tree = TreeNode.fromList(Arrays.asList(-2, null, -3));
+        log.info(tree);
+
+        tree = TreeNode.fromList(Arrays.asList(5, 4, 8, 11, null, 13, 4, 7, 2, null, null, null, 1));
+        log.info(tree);
+
+        tree = TreeNode.fromList(Arrays.asList(1, 2, 3));
+        log.info(tree);
+
+        tree = TreeNode.fromList(Arrays.asList(1, 2));
         log.info(tree);
     }
 }
