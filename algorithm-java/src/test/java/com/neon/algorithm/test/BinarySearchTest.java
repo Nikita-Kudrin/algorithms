@@ -1,4 +1,4 @@
-package com.neon.algorithm.misc;
+package com.neon.algorithm.test;
 
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;

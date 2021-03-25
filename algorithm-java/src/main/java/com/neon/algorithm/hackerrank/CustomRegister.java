@@ -67,7 +67,7 @@ public class CustomRegister implements Register {
 
         Map<Integer, Integer> tempRegister = register.entrySet().stream()
                 .filter(item -> item.getValue() >= limit)
-                .collect(Collectors.toMap(entry -> (Integer) entry.getKey(), entry -> (Integer) entry.getValue()));
+                .collect(Collectors.toMap(entry -> entry.getKey(), entry -> entry.getValue()));
         register = new HashMap<>(tempRegister);
     }
 
