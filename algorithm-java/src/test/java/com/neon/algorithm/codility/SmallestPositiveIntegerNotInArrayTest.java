@@ -21,7 +21,8 @@ public class SmallestPositiveIntegerNotInArrayTest {
                 Arguments.of(new int[]{0}, 1),
                 Arguments.of(new int[]{}, 1),
                 Arguments.of(new int[]{2, 1, -1}, 3),
-                Arguments.of(new int[]{-1, -5, 14, 1}, 2)
+                Arguments.of(new int[]{-1, -5, 14, 1}, 2),
+                Arguments.of(new int[]{4, 5, 6, 2}, 1)
         );
     }
 

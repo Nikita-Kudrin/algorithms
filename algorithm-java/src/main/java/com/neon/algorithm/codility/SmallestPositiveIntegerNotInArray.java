@@ -3,6 +3,7 @@ package com.neon.algorithm.codility;
 import java.util.Arrays;
 
 /**
+ * Codility demo task.
  * Find smallest positive integer > 0 that does not occur in array
  */
 public class SmallestPositiveIntegerNotInArray {
@@ -15,11 +16,6 @@ public class SmallestPositiveIntegerNotInArray {
         var positiveNumbers = Arrays.stream(array).distinct().filter(item -> item > 0).toArray();
         if (positiveNumbers.length == 0) return 1;
 
-        for (var index = 0; index < positiveNumbers.length - 1; index++) {
-            if (positiveNumbers[index] + 1 != positiveNumbers[index + 1])
-                return positiveNumbers[index] + 1;
-        }
-
         int min = 0, max = 0;
 
         if (positiveNumbers.length == 1)
@@ -30,7 +26,15 @@ public class SmallestPositiveIntegerNotInArray {
         }
 
         var result = min - 1;
+
         if (result > 0) return min - 1;
-        else return max + 1;
+        else {
+            for (var index = 0; index < positiveNumbers.length - 1; index++) {
+                if (positiveNumbers[index] + 1 != positiveNumbers[index + 1])
+                    return positiveNumbers[index] + 1;
+            }
+
+            return max + 1;
+        }
     }
 }
