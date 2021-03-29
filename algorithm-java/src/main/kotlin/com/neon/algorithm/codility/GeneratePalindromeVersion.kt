@@ -35,5 +35,14 @@ class GeneratePalindromeVersion {
 
             return String(output)
         }
+
+        fun isPalindrome(input: String): Boolean {
+            for (index in input.indices) {
+                if (input[index] != input[input.length - index - 1])
+                    return false
+            }
+
+            return true
+        }
     }
 }
