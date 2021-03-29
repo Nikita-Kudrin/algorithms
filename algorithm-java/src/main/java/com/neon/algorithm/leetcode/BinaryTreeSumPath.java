@@ -2,16 +2,10 @@ package com.neon.algorithm.leetcode;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.jupiter.api.DynamicTest;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestFactory;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * https://leetcode.com/problems/path-sum/
@@ -95,7 +89,7 @@ class TreeNode {
                 var item = queue.remove();
 
                 if (item == null) {
-                    nodeIndex +=2; // skip 2 null children
+                    nodeIndex += 2; // skip 2 null children
                     continue;
                 }
 
@@ -117,23 +111,10 @@ class TreeNode {
     }
 }
 
-class TestData {
-    TreeNode node;
-    Integer searchedSum;
-    boolean expectedResult;
-
-    TestData(TreeNode node, Integer searchedSum, boolean expectedResult) {
-        this.node = node;
-        this.searchedSum = searchedSum;
-        this.expectedResult = expectedResult;
-    }
-}
-
-
 public class BinaryTreeSumPath {
     private final Logger log = LogManager.getLogger();
 
-    public boolean hasPathSum(TreeNode root, int targetSum) {
+    public static boolean hasPathSum(TreeNode root, int targetSum) {
         if (root == null) return false;
 
         // found a leaf
@@ -147,39 +128,5 @@ public class BinaryTreeSumPath {
             hasPath = hasPathSum(root.right, targetSum - root.val);
             return hasPath;
         }
-    }
-
-    List<TestData> inputData = Arrays.asList(
-            new TestData(TreeNode.fromList(Arrays.asList(-2, null, -3)), -5, true),
-            new TestData(TreeNode.fromList(Arrays.asList(5, 4, 8, 11, null, 13, 4, 7, 2, null, null, null, 1)), 22, true),
-            new TestData(TreeNode.fromList(Arrays.asList(1, 2, 3)), 5, false),
-            new TestData(TreeNode.fromList(Arrays.asList(1, 2)), 0, false)
-    );
-
-    @TestFactory
-    public Stream<DynamicTest> hasPathSumTest() {
-        return inputData.stream()
-                .map(testDataItem -> DynamicTest.dynamicTest("hasPathSumDynamicTest",
-                        () -> {
-                            var hasPath = hasPathSum(testDataItem.node, testDataItem.searchedSum);
-                            assertThat(hasPath)
-                                    .describedAs("Tree : \"" + testDataItem.node.toString() + "\" has path with sum " + testDataItem.searchedSum)
-                                    .isEqualTo(testDataItem.expectedResult);
-                        }));
-    }
-
-    @Test
-    void treeTextRepresentation() {
-        var tree = TreeNode.fromList(Arrays.asList(-2, null, -3));
-        log.info(tree);
-
-        tree = TreeNode.fromList(Arrays.asList(5, 4, 8, 11, null, 13, 4, 7, 2, null, null, null, 1));
-        log.info(tree);
-
-        tree = TreeNode.fromList(Arrays.asList(1, 2, 3));
-        log.info(tree);
-
-        tree = TreeNode.fromList(Arrays.asList(1, 2));
-        log.info(tree);
     }
 }

@@ -10,23 +10,23 @@ public class BinarySearchCorrectErrorsInCodeTask {
             return -1;
         }
 
-        int leftBound = 0;
-        int rightBound = length - 1;
+        int leftIndex = 0;
+        int rightIndex = length - 1;
 
-        while (leftBound < rightBound) {
-            int median = (leftBound + rightBound) / 2;
-            if (sortedArray[median] > searchedInteger) {
-                rightBound = median - 1;
+        while (leftIndex < rightIndex) {
+            int medianIndex = (leftIndex + rightIndex) / 2;
+
+            if (sortedArray[medianIndex] == searchedInteger) return medianIndex;
+
+            if (sortedArray[medianIndex] > searchedInteger) {
+                rightIndex = medianIndex - 1;
             } else {
-                if (leftBound == median) break;
-                leftBound = median;
+                leftIndex = medianIndex + 1;
             }
         }
 
-        if (sortedArray[leftBound] == searchedInteger) {
-            return leftBound;
-        } else if (sortedArray[rightBound] == searchedInteger) {
-            return rightBound;
+        if (sortedArray[leftIndex] == searchedInteger) {
+            return leftIndex;
         }
 
         return -1;
