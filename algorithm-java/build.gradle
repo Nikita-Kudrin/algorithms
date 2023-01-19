@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.jetbrains.kotlin.jvm' version '1.4.32'
+    id 'org.jetbrains.kotlin.jvm' version '1.6.21'
 }
 
 group 'com.neon.algorithm'
@@ -15,14 +15,14 @@ dependencies {
     implementation 'org.apache.logging.log4j:log4j-api:2.13.0'
     implementation 'org.apache.commons:commons-lang3:3.10'
 
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.1'
-    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.7.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.9.1'
 
     testImplementation 'org.assertj:assertj-core:3.12.2'
     testImplementation 'org.javatuples:javatuples:1.2'
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.21"
 
     testImplementation 'com.github.javafaker:javafaker:1.0.2'
 }
@@ -32,8 +32,8 @@ test {
 }
 
 compileKotlin {
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = "11"
 }
 compileTestKotlin {
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = "11"
 }
