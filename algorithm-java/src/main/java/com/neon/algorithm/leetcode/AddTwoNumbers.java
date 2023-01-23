@@ -1,18 +1,6 @@
 package com.neon.algorithm.leetcode;
 
 /**
- * Definition for singly-linked list.
- */
-class ListNode {
-    int val;
-    ListNode next;
-
-    ListNode(int x) {
-        val = x;
-    }
-}
-
-/**
  * https://leetcode.com/problems/add-two-numbers/
  * <p>
  * You are given two non-empty linked lists representing two non-negative integers.
