@@ -11,7 +11,6 @@ namespace ExampleDotnetCore.LeetCode
          * Input: Array of int's. Not use the same item twice. Return indices of 2 items, that item1 + item2 = target
          * public int[] TwoSum(int[] nums, int target)
          */
-
         public int[] TwoSum(int[] numbers, int target)
         {
             for (var firstIndex = 0; firstIndex < numbers.Length; firstIndex++)
